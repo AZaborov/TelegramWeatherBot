@@ -1,4 +1,4 @@
-package com.telegramweatherbot;
+package com.telegramweatherbot.model;
 
 import com.google.gson.annotations.SerializedName;
 

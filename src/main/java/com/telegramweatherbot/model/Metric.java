@@ -1,22 +1,23 @@
-package com.telegramweatherbot;
+package com.telegramweatherbot.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Temperature {
+public class Metric {
+
     @SerializedName("Value")
-    private Double value;
+    private Integer value;
     @SerializedName("Unit")
     private String unit;
     @SerializedName("UnitType")
     private Integer unitType;
 
     @SerializedName("Value")
-    public Double getValue() {
+    public Integer getValue() {
         return value;
     }
 
     @SerializedName("Value")
-    public void setValue(Double value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -39,4 +40,5 @@ public class Temperature {
     public void setUnitType(Integer unitType) {
         this.unitType = unitType;
     }
+
 }

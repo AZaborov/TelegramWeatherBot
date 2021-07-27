@@ -1,24 +1,24 @@
-package com.telegramweatherbot;
+package com.telegramweatherbot.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SupplementalAdminArea {
+public class Region {
 
-    @SerializedName("Level")
-    private Integer level;
+    @SerializedName("ID")
+    private String id;
     @SerializedName("LocalizedName")
     private String localizedName;
     @SerializedName("EnglishName")
     private String englishName;
 
-    @SerializedName("Level")
-    public Integer getLevel() {
-        return level;
+    @SerializedName("ID")
+    public String getId() {
+        return id;
     }
 
-    @SerializedName("Level")
-    public void setLevel(Integer level) {
-        this.level = level;
+    @SerializedName("ID")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @SerializedName("LocalizedName")
