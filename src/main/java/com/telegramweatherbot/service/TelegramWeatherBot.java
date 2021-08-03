@@ -23,8 +23,15 @@ public class TelegramWeatherBot {
     public static void main(String[] args) {
         PropertyConfigurator.configure("src/main/resources/log4j.properties");
         logger.debug("Программа запущена");
-        String telegramBotToken = "1794124946:AAEf-Z74Zgb6yx0aaOw0rQ0BVFpDYO820fA";
+        String telegramBotToken = "1916891296:AAGTy3CCc2veSmK1wwpotT84amHi-JLxCFk";
         TelegramBot bot = new TelegramBot(telegramBotToken);
+
+        try {
+            H2Database.createTables();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
 
         // Обработка обновлений
         bot.setUpdatesListener(updates -> {
@@ -33,6 +40,10 @@ public class TelegramWeatherBot {
                 String userName = update.message().from().username();
                 String userMessage = update.message().text();
                 logger.info(String.format("От пользователя %s пришло сообщение", userName));
+
+                if (!H2Database.chatExists(userId)) {
+                    H2Database.addChat(userId);
+                }
 
                 if (userMessage != null) {
                     switch (userMessage) {
@@ -45,24 +56,18 @@ public class TelegramWeatherBot {
                         case "/help": {
                             logger.info("Программа получила /help");
                             String message =
-                                    "/forecasthere - получить прогноз по выбранной геолокации\n" +
+                                    "/forecastgeo - получить прогноз по выбранной геолокации\n" +
                                     "/forecastcity - получить прогноз по выбранному городу\n" +
-                                    "/prevforecasthere - получить прогноз по предыдущей геолокации\n" +
+                                    "/prevforecastgeo - получить прогноз по предыдущей геолокации\n" +
                                     "/prevforecastcity - получить прогноз по предыдущему городу\n" +
-                                    "/forecastherehistory - посмотреть 10 последних запросов по геолокации и выбрать один из них\n" +
+                                    "/forecastgeohistory - посмотреть 10 последних запросов по геолокации и выбрать один из них\n" +
                                     "/forecastcityhistory - посмотреть 10 последних запросов по городу и выбрать один из них\n" +
-                                    "/forecasthereclear - очистить историю запросов по геолокации\n" +
+                                    "/forecastgeoclear - очистить историю запросов по геолокации\n" +
                                     "/forecastcityclear - очистить историю запросов по городу\n" +
                                     "/toggledaily - включить/выключить ежедневный прогноз (по умолчанию выключен)\n" +
                                     "/setdailytime - установить время ежедневного прогноза (по умолчанию 9:00)\n" +
                                     "/settimezone - установить часовой пояс (по умолчанию МСК)\n";
                             bot.execute(new SendMessage(userId, message));
-                            break;
-                        }
-                        case "/forecasthere": {
-                            logger.info("Программа получила /forecasthere");
-                            bot.execute(new SendMessage(userId, "Отправьте геолокацию"));
-                            locationInputOn = true;
                             break;
                         }
                         case "/forecastcity": {
@@ -71,22 +76,44 @@ public class TelegramWeatherBot {
                             cityNameInputOn = true;
                             break;
                         }
-                        case "/prevforecasthere": {
+                        case "/forecastgeo": {
+                            logger.info("Программа получила /forecastgeo");
+                            bot.execute(new SendMessage(userId, "Отправьте геолокацию"));
+                            locationInputOn = true;
                             break;
                         }
                         case "/prevforecastcity": {
+                            int cityCode = H2Database.getPrevCity(userId);
+                            if (cityCode == -1) {
+                                bot.execute(new SendMessage(userId, "Не найдено предыдущего запроса"));
+                            }
+                            else {
+                                bot.execute(new SendMessage(userId, getForecastMessage(String.valueOf(cityCode))));
+                                logger.info("Программа успешно отправила прогноз погоды пользователю");
+                            }
                             break;
                         }
-                        case "/forecastherehistory": {
+                        case "/prevforecastgeo": {
+                            int cityCode = H2Database.getPrevGeo(userId);
+                            if (cityCode == -1) {
+                                bot.execute(new SendMessage(userId, "Не найдено предыдущего запроса"));
+                            }
+                            else {
+                                bot.execute(new SendMessage(userId, getForecastMessage(String.valueOf(cityCode))));
+                                logger.info("Программа успешно отправила прогноз погоды пользователю");
+                            }
                             break;
                         }
                         case "/forecastcityhistory": {
                             break;
                         }
-                        case "/forecasthereclear": {
+                        case "/forecastgeohistory": {
                             break;
                         }
                         case "/forecastcityclear": {
+                            break;
+                        }
+                        case "/forecastgeoclear": {
                             break;
                         }
                         case "/toggledaily": {
@@ -144,6 +171,7 @@ public class TelegramWeatherBot {
                                     int cityNum = Integer.parseInt(input);
                                     String cityCode = locations[cityNum - 1].getKey();
                                     bot.execute(new SendMessage(userId, getForecastMessage(cityCode)));
+                                    H2Database.addCityRequest(userId, cityCode);
                                     logger.info("Программа успешно отправила прогноз погоды пользователю");
                                 }
                                 catch (NumberFormatException e) {
@@ -177,6 +205,7 @@ public class TelegramWeatherBot {
                         logger.debug("Программа получила json сообщение с найденной локацией и распрасила его");
 
                         bot.execute(new SendMessage(userId, getForecastMessage(location.getKey())));
+                        H2Database.addGeoRequest(userId, location.getKey());
                         logger.info("Программа успешно отправила прогноз погоды пользователю");
                     }
                     catch (Exception e) {

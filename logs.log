@@ -106,3 +106,473 @@
 [OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
 [OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
 [OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecasthere
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение не является текстом
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение может быть не геолокацией
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил информацию о локации по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденной локацией и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /help
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение не является текстом
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение может быть не геолокацией
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил информацию о локации по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденной локацией и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /start
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /help
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение не является текстом
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение может быть не геолокацией
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил информацию о локации по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденной локацией и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /start
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /help
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение не является текстом
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение может быть не геолокацией
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил информацию о локации по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденной локацией и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый запрос города
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastcity
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя название города
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил список городов по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденными городами и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила список городов, основываясь на введённых пользователем данных
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила от пользователя номер города
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Возможно ввести неверные данные (не целое число или номер, которого нет в списке)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый запрос города
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] INFO  com.telegramweatherbot.service.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый пользователь
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /forecastgeo
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение не является текстом
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.TelegramWeatherBot  - Присланное пользователем сообщение может быть не геолокацией
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил информацию о локации по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с найденной локацией и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.H2Database  - В базу данных добавлен новый запрос геолокации
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила /help
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - От пользователя AMZaborov пришло сообщение
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа в методе формирования прогноза погоды на ближайшие 12 часов
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Пользователь запросил прогноз погоды по AccuWeather API
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.HTTPRequest  - Программа в методе получения данных по http запросу
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.HTTPRequest  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа получила json сообщение с прогнозом погоды и распрасила его
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа составила сообщение с прогнозом погоды
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.service.TelegramWeatherBot  - Программа успешно отправила прогноз погоды пользователю
