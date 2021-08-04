@@ -18,14 +18,16 @@ public class TelegramWeatherBot {
     private static Boolean cityNameInputOn = false;
     private static Boolean cityNumberChooseOn = false;
     private static Boolean locationInputOn = false;
+    private static Boolean cityHistoryChooseOn = false;
+    private static Boolean geoHistoryChooseOn = false;
     private static LocationByCity[] locations;
 
     public static void main(String[] args) {
         PropertyConfigurator.configure("src/main/resources/log4j.properties");
         logger.debug("Программа запущена");
+
         String telegramBotToken = "1916891296:AAGTy3CCc2veSmK1wwpotT84amHi-JLxCFk";
         TelegramBot bot = new TelegramBot(telegramBotToken);
-
         try {
             H2Database.createTables();
         }
@@ -48,81 +50,114 @@ public class TelegramWeatherBot {
                 if (userMessage != null) {
                     switch (userMessage) {
                         case "/start": {
-                            logger.info("Программа получила /start");
+                            logger.debug("Программа получила /start");
                             String message = "Бот для прогноза погоды. Введите /help для получения списка доступных команд.";
                             bot.execute(new SendMessage(userId, message));
                             break;
                         }
                         case "/help": {
-                            logger.info("Программа получила /help");
+                            logger.debug("Программа получила /help");
                             String message =
-                                    "/forecastgeo - получить прогноз по выбранной геолокации\n" +
                                     "/forecastcity - получить прогноз по выбранному городу\n" +
-                                    "/prevforecastgeo - получить прогноз по предыдущей геолокации\n" +
+                                    "/forecastgeo - получить прогноз по выбранной геолокации\n" +
                                     "/prevforecastcity - получить прогноз по предыдущему городу\n" +
-                                    "/forecastgeohistory - посмотреть 10 последних запросов по геолокации и выбрать один из них\n" +
-                                    "/forecastcityhistory - посмотреть 10 последних запросов по городу и выбрать один из них\n" +
-                                    "/forecastgeoclear - очистить историю запросов по геолокации\n" +
+                                    "/prevforecastgeo - получить прогноз по предыдущей геолокации\n" +
+                                    "/forecastcityhistory - посмотреть историю запросов по городу и выбрать один из них\n" +
+                                    "/forecastgeohistory - посмотреть историю запросов по геолокации и выбрать один из них\n" +
                                     "/forecastcityclear - очистить историю запросов по городу\n" +
+                                    "/forecastgeoclear - очистить историю запросов по геолокации\n" +
                                     "/toggledaily - включить/выключить ежедневный прогноз (по умолчанию выключен)\n" +
                                     "/setdailytime - установить время ежедневного прогноза (по умолчанию 9:00)\n" +
                                     "/settimezone - установить часовой пояс (по умолчанию МСК)\n";
+
+
                             bot.execute(new SendMessage(userId, message));
                             break;
                         }
                         case "/forecastcity": {
-                            logger.info("Программа получила /forecastcity");
+                            logger.debug("Программа получила /forecastcity");
                             bot.execute(new SendMessage(userId, "Введите название города"));
                             cityNameInputOn = true;
                             break;
                         }
                         case "/forecastgeo": {
-                            logger.info("Программа получила /forecastgeo");
+                            logger.debug("Программа получила /forecastgeo");
                             bot.execute(new SendMessage(userId, "Отправьте геолокацию"));
                             locationInputOn = true;
                             break;
                         }
                         case "/prevforecastcity": {
-                            int cityCode = H2Database.getPrevCity(userId);
-                            if (cityCode == -1) {
+                            logger.debug("Программа получила /prevforecastcity");
+                            int cityCode = H2Database.getPrevCityCode(userId);
+                            String cityName = H2Database.getPrevCityName(userId);
+
+                            if (cityCode == -1 ||cityName.equals("")) {
                                 bot.execute(new SendMessage(userId, "Не найдено предыдущего запроса"));
+                                logger.error("В базе данных запросов по городам нет записей");
                             }
                             else {
-                                bot.execute(new SendMessage(userId, getForecastMessage(String.valueOf(cityCode))));
+                                String message = getForecastMessage(String.valueOf(cityCode), "Город: " + cityName);
+                                bot.execute(new SendMessage(userId, message));
                                 logger.info("Программа успешно отправила прогноз погоды пользователю");
                             }
                             break;
                         }
                         case "/prevforecastgeo": {
-                            int cityCode = H2Database.getPrevGeo(userId);
-                            if (cityCode == -1) {
+                            logger.debug("Программа получила /prevforecastgeo");
+                            int locationCode = H2Database.getPrevGeoCode(userId);
+                            String locationName = H2Database.getPrevGeoName(userId);
+
+                            if (locationCode == -1 || locationName.equals("")) {
                                 bot.execute(new SendMessage(userId, "Не найдено предыдущего запроса"));
+                                logger.error("В базе данных запросов по геолокации нет записей");
                             }
                             else {
-                                bot.execute(new SendMessage(userId, getForecastMessage(String.valueOf(cityCode))));
+                                String message = getForecastMessage(String.valueOf(locationCode), "Локация: " + locationName);
+                                bot.execute(new SendMessage(userId, message));
                                 logger.info("Программа успешно отправила прогноз погоды пользователю");
                             }
                             break;
                         }
                         case "/forecastcityhistory": {
+                            logger.debug("Программа получила /forecastcityhistory");
+                            String history = H2Database.getCityHistory(userId);
+                            bot.execute(new SendMessage(userId, history));
+                            logger.info("Программа успешно отправила пользователю историю запросов по городам");
+                            cityHistoryChooseOn = true;
                             break;
                         }
                         case "/forecastgeohistory": {
+                            logger.debug("Программа получила /forecastgeohistory");
+                            String history = H2Database.getGeoHistory(userId);
+                            bot.execute(new SendMessage(userId, history));
+                            logger.info("Программа успешно отправила пользователю историю запросов по геолокации");
+                            geoHistoryChooseOn = true;
                             break;
                         }
                         case "/forecastcityclear": {
+                            logger.debug("Программа получила /forecastcityclear");
+                            H2Database.clearCityHistory(userId);
+                            bot.execute(new SendMessage(userId, "История запросов по городам очищена"));
+                            logger.info("Программа успешно очистила историю запросов по городам");
                             break;
                         }
                         case "/forecastgeoclear": {
+                            logger.debug("Программа получила /forecastgeoclear");
+                            H2Database.clearGeoHistory(userId);
+                            bot.execute(new SendMessage(userId, "История запросов по геолокации очищена"));
+                            logger.info("Программа успешно очистила историю запросов по геолокации");
                             break;
                         }
                         case "/toggledaily": {
+                            logger.debug("Программа получила /toggledaily");
                             break;
                         }
                         case "/setdailytime": {
+                            logger.debug("Программа получила /setdailytime");
                             break;
                         }
                         case "/settimezone": {
+                            logger.debug("Программа получила /settimezone");
                             break;
                         }
                         default: {
@@ -170,8 +205,13 @@ public class TelegramWeatherBot {
                                     logger.warn("Возможно ввести неверные данные (не целое число или номер, которого нет в списке)");
                                     int cityNum = Integer.parseInt(input);
                                     String cityCode = locations[cityNum - 1].getKey();
-                                    bot.execute(new SendMessage(userId, getForecastMessage(cityCode)));
-                                    H2Database.addCityRequest(userId, cityCode);
+                                    String cityName =
+                                            locations[cityNum - 1].getLocalizedName() + ", " +
+                                            locations[cityNum - 1].getCountry().getLocalizedName() + ", " +
+                                            locations[cityNum - 1].getAdministrativeArea().getLocalizedName();
+
+                                    bot.execute(new SendMessage(userId, getForecastMessage(cityCode, "Город: " + cityName)));
+                                    H2Database.addCityRequest(userId, cityCode, cityName);
                                     logger.info("Программа успешно отправила прогноз погоды пользователю");
                                 }
                                 catch (NumberFormatException e) {
@@ -186,6 +226,63 @@ public class TelegramWeatherBot {
                                 }
 
                                 cityNumberChooseOn = false;
+                            }
+
+                            // Выбор города среди истории запросов
+                            else if (cityHistoryChooseOn) {
+                                String input = update.message().text();
+
+                                try {
+                                    logger.warn("Возможно ввести неверные данные (не целое число или номер, которого нет в списке)");
+                                    int index = Integer.parseInt(input);
+                                    int cityCode = H2Database.getCityCodeByIndex(userId, index);
+                                    String cityName = H2Database.getCityNameByIndex(userId, index);
+
+                                    if (cityCode == -1 || cityName.equals("")) {
+                                        bot.execute(new SendMessage(userId, "Города с таким номером нет в списке"));
+                                        logger.error("Города с таким номером нет в базе данных");
+                                    }
+                                    else {
+                                        String message = getForecastMessage(String.valueOf(cityCode), "Город: " + cityName);
+                                        bot.execute(new SendMessage(userId, message));
+                                        logger.info("Программа успешно отправила прогноз погоды пользователю");
+                                    }
+                                }
+                                catch (NumberFormatException e) {
+                                    bot.execute(new SendMessage(userId, "Введено не число"));
+                                    logger.error("Программе не удалось преобразовать пользовательский ввод в тип Integer)");
+                                    e.printStackTrace();
+                                }
+
+                                cityHistoryChooseOn = false;
+                            }
+
+                            // Выбор геолокации среди истории запросов
+                            else if (geoHistoryChooseOn) {
+                                String input = update.message().text();
+
+                                try {
+                                    logger.warn("Возможно ввести неверные данные (не целое число или номер, которого нет в списке)");
+                                    int index = Integer.parseInt(input);
+                                    int locationCode = H2Database.getGeoCodeByIndex(userId, index);
+                                    String locationName = H2Database.getGeoNameByIndex(userId, index);
+
+                                    if (locationCode == -1 || locationName.equals("")) {
+                                        bot.execute(new SendMessage(userId, "Локации с таким номером нет в списке"));
+                                        logger.error("Локации с таким номером нет в базе данных");
+                                    }
+                                    else {
+                                        String message = getForecastMessage(String.valueOf(locationCode), "Локация " + locationName);
+                                        bot.execute(new SendMessage(userId, message));
+                                        logger.info("Программа успешно отправила прогноз погоды пользователю");
+                                    }
+                                }
+                                catch (NumberFormatException e) {
+                                    bot.execute(new SendMessage(userId, "Введено не число"));
+                                    logger.error("Программе не удалось преобразовать пользовательский ввод в тип Integer)");
+                                    e.printStackTrace();
+                                }
+                                geoHistoryChooseOn = false;
                             }
                         }
                     }
@@ -204,8 +301,11 @@ public class TelegramWeatherBot {
                         LocationByGeo location = gson.fromJson(contents, LocationByGeo.class);
                         logger.debug("Программа получила json сообщение с найденной локацией и распрасила его");
 
-                        bot.execute(new SendMessage(userId, getForecastMessage(location.getKey())));
-                        H2Database.addGeoRequest(userId, location.getKey());
+                        String locationName = location.getLocalizedName() + ", " + location.getAdministrativeArea().getLocalizedName();
+                        String message = getForecastMessage(location.getKey(), "Локация: " + locationName);
+
+                        bot.execute(new SendMessage(userId, message));
+                        H2Database.addGeoRequest(userId, location.getKey(), locationName);
                         logger.info("Программа успешно отправила прогноз погоды пользователю");
                     }
                     catch (Exception e) {
@@ -222,15 +322,17 @@ public class TelegramWeatherBot {
         });
     }
 
-    private static String getForecastMessage(String code) {
-        logger.debug("Программа в методе формирования прогноза погоды на ближайшие 12 часов");
+    private static String getForecastMessage(String code, String name) {
+        logger.debug("Программа в методе getForecastMessage()");
 
         String contents = HTTPRequest.get12HourForecast(code);
         Gson gson = new Gson();
         HourForecast[] hourForecasts = gson.fromJson(contents, HourForecast[].class);
         logger.debug("Программа получила json сообщение с прогнозом погоды и распрасила его");
 
-        StringBuilder message = new StringBuilder("Прогноз на ближайшие 12 часов:\n");
+        StringBuilder message = new StringBuilder(name);
+        message.append("\n\nПрогноз на ближайшие 12 часов:\n");
+
         for (HourForecast f : hourForecasts) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
             LocalTime time = LocalTime.parse(f.getDateTime(), formatter);

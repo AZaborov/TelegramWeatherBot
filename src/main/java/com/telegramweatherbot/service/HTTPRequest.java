@@ -17,25 +17,25 @@ public class HTTPRequest {
     private HTTPRequest(){}
 
     public static String get12HourForecast(String locationCode) {
-        logger.debug("Пользователь запросил прогноз погоды по AccuWeather API");
+        logger.info("Пользователь запросил прогноз погоды по AccuWeather API");
         String url = forecast12HourRequest + locationCode + "?apikey=" + accuWeatherApiKey + "&language=ru-ru&metric=true";
         return getUrlContents(url);
     }
 
     public static String getCities(String cityName) {
-        logger.debug("Пользователь запросил список городов по AccuWeather API");
+        logger.info("Пользователь запросил список городов по AccuWeather API");
         String url = citiesRequest + "?apikey=" + accuWeatherApiKey + "&q=" + cityName;
         return getUrlContents(url);
     }
 
     public static String getLocation(Float latitude, Float longitude) {
-        logger.debug("Пользователь запросил информацию о локации по AccuWeather API");
+        logger.info("Пользователь запросил информацию о локации по AccuWeather API");
         String url = locationRequest + "?apikey=" + accuWeatherApiKey + "&q=" + latitude + "%2C%20" + longitude;
         return getUrlContents(url);
     }
 
     private static String getUrlContents(String theUrl) {
-        logger.debug("Программа в методе получения данных по http запросу");
+        logger.info("Программа в методе получения данных по http запросу");
 
         StringBuilder content = new StringBuilder();
         try {
