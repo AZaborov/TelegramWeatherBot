@@ -18,24 +18,47 @@ public class HTTPRequest {
 
     public static String get12HourForecast(String locationCode) {
         logger.info("Пользователь запросил прогноз погоды по AccuWeather API");
-        String url = forecast12HourRequest + locationCode + "?apikey=" + accuWeatherApiKey + "&language=ru-ru&metric=true";
-        return getUrlContents(url);
+
+        StringBuilder url = new StringBuilder();
+        url.append(forecast12HourRequest);
+        url.append(locationCode);
+        url.append("?apikey=");
+        url.append(accuWeatherApiKey);
+        url.append("&language=ru-ru&metric=true");
+
+        return getUrlContents(url.toString());
     }
 
     public static String getCities(String cityName) {
         logger.info("Пользователь запросил список городов по AccuWeather API");
-        String url = citiesRequest + "?apikey=" + accuWeatherApiKey + "&q=" + cityName;
-        return getUrlContents(url);
+
+        StringBuilder url = new StringBuilder();
+        url.append(citiesRequest);
+        url.append("?apikey=");
+        url.append(accuWeatherApiKey);
+        url.append("&q=");
+        url.append(cityName);
+
+        return getUrlContents(url.toString());
     }
 
     public static String getLocation(Float latitude, Float longitude) {
         logger.info("Пользователь запросил информацию о локации по AccuWeather API");
-        String url = locationRequest + "?apikey=" + accuWeatherApiKey + "&q=" + latitude + "%2C%20" + longitude;
-        return getUrlContents(url);
+
+        StringBuilder url = new StringBuilder();
+        url.append(locationRequest);
+        url.append("?apikey=");
+        url.append(accuWeatherApiKey);
+        url.append("&q=");
+        url.append(latitude);
+        url.append("%2C%20");
+        url.append(longitude);
+
+        return getUrlContents(url.toString());
     }
 
     private static String getUrlContents(String theUrl) {
-        logger.info("Программа в методе получения данных по http запросу");
+        logger.debug("Программа в методе получения данных по http запросу");
 
         StringBuilder content = new StringBuilder();
         try {
@@ -52,8 +75,7 @@ public class HTTPRequest {
             bufferedReader.close();
         }
         catch(Exception e) {
-            logger.error("Программе не удалось получить данные из полученной ссылки");
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return content.toString();
