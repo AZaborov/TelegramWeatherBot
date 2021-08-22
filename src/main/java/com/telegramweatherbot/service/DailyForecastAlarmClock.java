@@ -17,11 +17,11 @@ public class DailyForecastAlarmClock {
 
     private Timer timer;
     private final long chatId;
-    private final TelegramBot bot;
     private Time alarmTime;
     private String cityName;
     private String cityCode;
     private String timeZone;
+    private Boolean enabled;
 
     public Time getAlarmTime() {
         return alarmTime;
@@ -55,19 +55,22 @@ public class DailyForecastAlarmClock {
         this.timeZone = timeZone;
     }
 
-    public DailyForecastAlarmClock(long chatId, TelegramBot bot, Time alarmTime, String cityName, String cityCode, String timeZone) {
-        logger.debug(String.format("Создан таймер для чата %s", chatId));
+    public Boolean isEnabled() { return enabled; }
+
+    public void setEnabled(Boolean enabled) { this.enabled = enabled; }
+
+    public DailyForecastAlarmClock(long chatId, Time alarmTime, String cityName, String cityCode, String timeZone) {
+        logger.debug("Программа в конструкторе класса DailyForecastAlarmClock");
+
         this.chatId = chatId;
-        this.bot = bot;
         this.alarmTime = alarmTime;
         this.cityName = cityName;
         this.cityCode = cityCode;
         this.timeZone = timeZone;
+        this.enabled = false;
     }
 
     public void startClock() {
-        logger.info(String.format("Таймер чата %s запущен", chatId));
-
         try {
             timer = new Timer();
             LocalTime startTime = LocalTime.now(ZoneId.of(timeZone));
@@ -80,9 +83,12 @@ public class DailyForecastAlarmClock {
                 @Override
                 public void run() {
                     String prevMessage = String.format("Ежедневый прогноз для города %s:", cityName);
-                    bot.execute(new SendMessage(chatId, TelegramWeatherBot.getForecastMessage(cityCode, prevMessage)));
+                    String forecastMessage = Utils.getUtils().getForecastMessage(cityCode, prevMessage);
+                    TelegramWeatherBot.getBot().execute(new SendMessage(chatId, forecastMessage));
                 }
             }, delay, period);
+
+            logger.info(String.format("Таймер чата %s запущен", chatId));
         }
         catch(Exception e) {
             logger.error(e.getMessage(), e);
@@ -90,7 +96,9 @@ public class DailyForecastAlarmClock {
     }
 
     public void stopClock() {
-        timer.cancel();
-        logger.info(String.format("Таймер чата %s остановлен", chatId));
+        if (timer != null) {
+            timer.cancel();
+            logger.info(String.format("Таймер чата %s остановлен", chatId));
+        }
     }
 }

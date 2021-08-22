@@ -1,6 +1,7 @@
 package com.telegramweatherbot.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.telegramweatherbot.service.Utils;
 
 public class TimeZone {
 
@@ -27,7 +28,7 @@ public class TimeZone {
 
     @SerializedName("Name")
     public String getName() {
-        return name;
+        return Utils.getUtils().formatTimeZone(name);
     }
 
     @SerializedName("Name")

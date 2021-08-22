@@ -1,75 +1,86 @@
 package com.telegramweatherbot.service;
 
+import com.pengrad.telegrambot.TelegramBot;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.model.TimeZone;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.commons.text.WordUtils;
 import org.apache.log4j.Logger;
+import org.h2.jdbcx.JdbcConnectionPool;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.HashMap;
 
 public class H2Database {
 
     private static final Logger logger = Logger.getLogger(H2Database.class);
-    private static final String url      = "jdbc:h2:~/weatherdb";
-    private static final String user     = "sa";
-    private static final String password = "";
-    private static Statement statement;
+    private static H2Database database;
+    private Connection connection;
+    private Statement statement;
 
-    private H2Database(){}
+    private H2Database() {
+        logger.debug("Программа в конструкторе класса H2Database");
 
-    public static void createTables() throws ClassNotFoundException {
-        logger.debug("Программа в методе createTables()");
+        connect();
+        createTables();
+    }
 
-        Class.forName("org.h2.Driver");
-        logger.info("Подключена база данных");
+    public static synchronized H2Database getDatabase() {
+        logger.debug("Программа в методе getDatabase() класса H2Database");
+
+        if (database == null) {
+            database = new H2Database();
+        }
+
+        return database;
+    }
+
+    private void connect() {
+        logger.debug("Программа в методе connect() класса H2Database");
 
         try {
-            Connection connection = DriverManager.getConnection(url, user, password);
+            Class.forName("org.h2.Driver");
+
+            String url = Utils.getProperties().getProperty("databaseUrl");
+            String user = Utils.getProperties().getProperty("databaseUser");
+            String password = Utils.getProperties().getProperty("databasePassword");
+
+            JdbcConnectionPool cp = JdbcConnectionPool.create(url, user, password);
+            connection = cp.getConnection();
+            //connection = DriverManager.getConnection(url, user, password);
+
+            logger.info("Подключена база данных");
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    private void createTables() {
+        logger.debug("Программа в методе createTables() класса H2Database");
+
+        try {
             statement = connection.createStatement();
 
-            statement.execute("DROP TABLE IF EXISTS CHATS_FLAGS");
-            statement.execute("DROP TABLE IF EXISTS CITY_REQUESTS");
-            statement.execute("DROP TABLE IF EXISTS GEO_REQUESTS");
-            statement.execute("DROP TABLE IF EXISTS CITIES");
-            statement.execute("DROP TABLE IF EXISTS DAILY_FORECAST_SETTINGS");
-
-            StringBuilder sqlChats = new StringBuilder("CREATE TABLE CHATS_FLAGS");
-            sqlChats.append("(CHAT_ID BIGINT PRIMARY KEY");
-            sqlChats.append(", DAILY_FORECAST_TIME_INPUT_ON BIT");
-            sqlChats.append(", DAILY_FORECAST_CITY_INPUT_ON BIT");
-            sqlChats.append(", CITY_NAME_INPUT_ON BIT");
-            sqlChats.append(", CITY_NUMBER_CHOOSE_ON BIT");
-            sqlChats.append(", LOCATION_INPUT_ON BIT");
-            sqlChats.append(", CITY_HISTORY_CHOOSE_ON BIT");
-            sqlChats.append(", GEO_HISTORY_CHOOSE_ON BIT)");
-            statement.execute(sqlChats.toString());
-            
-            StringBuilder sqlDailyForecastSettings = new StringBuilder("CREATE TABLE DAILY_FORECAST_SETTINGS");
-            sqlDailyForecastSettings.append("(CHAT_ID BIGINT PRIMARY KEY");
-            sqlDailyForecastSettings.append(", DAILY_FORECAST_TIME TIME");
-            sqlDailyForecastSettings.append(", DAILY_FORECAST_CITY_NAME VARCHAR(100)");
-            sqlDailyForecastSettings.append(", DAILY_FORECAST_CITY_CODE INT");
-            sqlDailyForecastSettings.append(", DAILY_FORECAST_TIME_ZONE VARCHAR(100)");
-            sqlDailyForecastSettings.append(", DAILY_FORECAST_ON BIT)");
-            statement.execute(sqlDailyForecastSettings.toString());
-            
-            statement.execute("CREATE TABLE CITY_REQUESTS(CHAT_ID BIGINT, CITY_CODE INT, CITY_NAME VARCHAR(100))");
-            statement.execute("CREATE TABLE GEO_REQUESTS(CHAT_ID BIGINT, GEO_CODE INT, GEO_NAME VARCHAR(100))");
-            statement.execute("CREATE TABLE CITIES(CHAT_ID BIGINT, CITY_CODE INT, CITY_NAME VARCHAR(100), CITY_TIME_ZONE VARCHAR(100))");
+            ScriptRunner sr = new ScriptRunner(connection);
+            Reader reader = new BufferedReader(new FileReader("src/main/scripts/createTables.sql"));
+            sr.runScript(reader);
 
             logger.info("В базе данных созданы таблицы");
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public static void addChat(long id) {
-        logger.debug("Программа в методе addChat()");
+    public void addChat(long id) {
+        logger.debug("Программа в методе addChat() класса H2Database");
 
         try {
-            statement.execute(String.format("INSERT INTO CHATS_FLAGS VALUES (%S, 0, 0, 0, 0, 0, 0, 0)", id));
             statement.execute(String.format("INSERT INTO DAILY_FORECAST_SETTINGS VALUES (%S, '09:00:00', 'Moscow, Russia, Moscow', 294021, 'Europe/Moscow', 0)", id));
             logger.info(String.format("В базу данных добавлен новый чат (id %s)", id));
         }
@@ -78,8 +89,8 @@ public class H2Database {
         }
     }
 
-    public static Boolean chatExists(long id) {
-        logger.debug("Программа в методе chatExists()");
+    public Boolean chatExists(long id) {
+        logger.debug("Программа в методе chatExists() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT * FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -91,26 +102,25 @@ public class H2Database {
         return false;
     }
 
-    public static void addCities(long id, LocationByCity[] cities) {
-        logger.debug("Программа в методе addCities()");
+    public void addCities(long id, LocationByCity[] cities) {
+        logger.debug("Программа в методе addCities() класса H2Database");
 
         try {
             statement.execute(String.format("DELETE FROM CITIES WHERE CHAT_ID='%S'", id));
 
             for (LocationByCity city : cities) {
 
-                StringBuilder cityName = new StringBuilder();
-                cityName.append(city.getLocalizedName());
-                cityName.append(", ");
-                cityName.append(city.getCountry().getLocalizedName());
-                cityName.append(", ");
-                cityName.append(city.getAdministrativeArea().getLocalizedName());
+                StringBuilder name;
+                name = new StringBuilder();
+                name.append(city.getLocalizedName());
+                name.append(", ");
+                name.append(city.getCountry().getLocalizedName());
+                name.append(", ");
+                name.append(city.getAdministrativeArea().getLocalizedName());
 
                 // Если в названии города есть апостроф, его нужно удалить, чтобы SQL запрос не сломался
-                while (cityName.toString().contains("'")) {
-                    int j = cityName.indexOf("'");
-                    cityName.replace(j, j+1, "");
-                }
+                String cityName = name.toString();
+                cityName = cityName.replace("'", " ");
 
                 String timeZone = city.getTimeZone().getName();
                 statement.execute(String.format("INSERT INTO CITIES VALUES (%S, %S, '%S', '%S')", id, city.getKey(), cityName, timeZone));
@@ -123,8 +133,8 @@ public class H2Database {
         }
     }
 
-    public static ArrayList<LocationByCity> getCities(long id) {
-        logger.debug("Программа в методе getCities()");
+    public ArrayList<LocationByCity> getCities(long id) {
+        logger.debug("Программа в методе getCities() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT * FROM CITIES WHERE CHAT_ID='%S'", id));
@@ -148,8 +158,8 @@ public class H2Database {
     }
 
     //---------------------------------------------Ежедневный прогноз---------------------------------------------------
-    public static Time getDailyForecastTime(long id) {
-        logger.debug("Программа в методе getDailyForecastTime()");
+    public Time getDailyForecastTime(long id) {
+        logger.debug("Программа в методе getDailyForecastTime() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_TIME FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
@@ -163,8 +173,8 @@ public class H2Database {
         return Time.valueOf("09:00:00");
     }
 
-    public static void setDailyForecastTime(long id, Time time) {
-        logger.debug("Программа в методе setDailyForecastTime()");
+    public void setDailyForecastTime(long id, Time time) {
+        logger.debug("Программа в методе setDailyForecastTime() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_TIME='%S' WHERE CHAT_ID='%S'", time, id));
@@ -174,8 +184,8 @@ public class H2Database {
         }
     }
 
-    public static String getDailyForecastCityName(long id) {
-        logger.debug("Программа в методе getDailyForecastCityName()");
+    public String getDailyForecastCityName(long id) {
+        logger.debug("Программа в методе getDailyForecastCityName() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_CITY_NAME FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
@@ -189,8 +199,8 @@ public class H2Database {
         return "Moscow, Russia, Moscow";
     }
 
-    public static void setDailyForecastCityName(long id, String name) {
-        logger.debug("Программа в методе setDailyForecastCityName()");
+    public void setDailyForecastCityName(long id, String name) {
+        logger.debug("Программа в методе setDailyForecastCityName() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_CITY_NAME='%S' WHERE CHAT_ID='%S'", name, id));
@@ -200,8 +210,8 @@ public class H2Database {
         }
     }
 
-    public static String getDailyForecastCityCode(long id) {
-        logger.debug("Программа в методе getDailyForecastCityCode()");
+    public String getDailyForecastCityCode(long id) {
+        logger.debug("Программа в методе getDailyForecastCityCode() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_CITY_CODE FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
@@ -215,8 +225,8 @@ public class H2Database {
         return "294021";
     }
 
-    public static void setDailyForecastCityCode(long id, String code) {
-        logger.debug("Программа в методе setDailyForecastCityCode()");
+    public void setDailyForecastCityCode(long id, String code) {
+        logger.debug("Программа в методе setDailyForecastCityCode() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_CITY_CODE=%S WHERE CHAT_ID='%S'", code, id));
@@ -226,17 +236,14 @@ public class H2Database {
         }
     }
 
-    public static String getDailyForecastTimeZone(long id) {
-        logger.debug("Программа в методе getDailyForecastTimeZone()");
+    public String getDailyForecastTimeZone(long id) {
+        logger.debug("Программа в методе getDailyForecastTimeZone() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_TIME_ZONE FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
             if (result.next()) {
-                String rawTimeZone = result.getString("DAILY_FORECAST_TIME_ZONE");
-                rawTimeZone = rawTimeZone.toLowerCase();
-                String[] dummy = rawTimeZone.split("/");
-
-                return WordUtils.capitalize(dummy[0]) + "/" + WordUtils.capitalize(dummy[1]);
+                String timeZone = result.getString("DAILY_FORECAST_TIME_ZONE");
+                return Utils.getUtils().formatTimeZone(timeZone);
             }
         }
         catch (SQLException e) {
@@ -245,8 +252,8 @@ public class H2Database {
         return "Europe/Moscow";
     }
 
-    public static void setDailyForecastTimeZone(long id, String zone) {
-        logger.debug("Программа в методе setDailyForecastTimeZone()");
+    public void setDailyForecastTimeZone(long id, String zone) {
+        logger.debug("Программа в методе setDailyForecastTimeZone() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_TIME_ZONE='%S' WHERE CHAT_ID='%S'", zone, id));
@@ -256,8 +263,8 @@ public class H2Database {
         }
     }
 
-    public static Boolean dailyForecastOn(long id) {
-        logger.debug("Программа в методе dailyForecastOn()");
+    public Boolean dailyForecastOn(long id) {
+        logger.debug("Программа в методе dailyForecastOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_ON FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
@@ -271,8 +278,8 @@ public class H2Database {
         return false;
     }
 
-    public static void setDailyForecast(long id, int isOn) {
-        logger.debug("Программа в методе setDailyForecast()");
+    public void setDailyForecast(long id, int isOn) {
+        logger.debug("Программа в методе setDailyForecast() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_ON=%S WHERE CHAT_ID='%S'", isOn, id));
@@ -282,16 +289,39 @@ public class H2Database {
         }
     }
 
+    // В случае если программа была перезапущена, восстанавливаем таймеры для ежедневного прогноза
+    public void setAlarmClocks(HashMap<Long, DailyForecastAlarmClock> dailyForecastAlarmClocks, TelegramBot bot) {
+        logger.debug("Программа в методе setAlarmClocks() класса H2Database");
+
+        try {
+            ResultSet result = statement.executeQuery("SELECT * FROM DAILY_FORECAST_SETTINGS");
+
+            while (result.next()) {
+                long chatId = result.getLong("CHAT_ID");
+                Time alarmTime = result.getTime("DAILY_FORECAST_TIME");
+                String cityName = result.getString("DAILY_FORECAST_CITY_NAME");
+                int cityCode = result.getInt("DAILY_FORECAST_CITY_CODE");
+                String dailyForecastTimeZone = result.getString("DAILY_FORECAST_TIME_ZONE");
+                boolean forecastOn = result.getBoolean("DAILY_FORECAST_ON");
+
+                DailyForecastAlarmClock clock = new DailyForecastAlarmClock(chatId, alarmTime, cityName, String.valueOf(cityCode), dailyForecastTimeZone);
+                dailyForecastAlarmClocks.put(chatId, clock);
+                if (forecastOn) clock.startClock();
+                logger.info("ДАННЫЕ ИЗ БАЗЫ СОХРАНИЛИСЬ");
+            }
+        }
+        catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
     //---------------------------------------------Прогноз по городу----------------------------------------------------
-    public static void addCityRequest(long id, String code, String name) {
-        logger.debug("Программа в методе addCityRequest()");
+    public void addCityRequest(long id, String code, String name) {
+        logger.debug("Программа в методе addCityRequest() класса H2Database");
 
         try {
             // Если в названии города есть апостроф, его нужно удалить, чтобы SQL запрос не сломался
-            while (name.contains("'")) {
-                int i = name.indexOf("'");
-                name = name.substring(0, i) + name.substring(i + 1);
-            }
+            name = name.replace("'", " ");
             statement.execute(String.format("INSERT INTO CITY_REQUESTS VALUES(%S, %S, '%S')", id, code, name));
             logger.info("В базу данных добавлен новый запрос города");
         }
@@ -300,8 +330,8 @@ public class H2Database {
         }
     }
 
-    public static int getPrevCityCode(long id) {
-        logger.debug("Программа в методе getPrevCity()");
+    public int getPrevCityCode(long id) {
+        logger.debug("Программа в методе getPrevCity() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_CODE FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -317,8 +347,8 @@ public class H2Database {
         return -1;
     }
 
-    public static String getPrevCityName(long id) {
-        logger.debug("Программа в методе getPrevCity()");
+    public String getPrevCityName(long id) {
+        logger.debug("Программа в методе getPrevCity() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -334,33 +364,26 @@ public class H2Database {
         return "";
     }
 
-    public static String getCityHistory(long id) {
-        logger.debug("Программа в методе getCityHistory()");
+    public ArrayList<String> getCityHistory(long id) {
+        logger.debug("Программа в методе getCityHistory() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
+            ArrayList<String> history = new ArrayList<>();
 
-            StringBuilder sb = new StringBuilder("История запросов по городам:\n");
-            int i = 1;
             while (result.next()) {
-                sb.append(i);
-                sb.append(") ");
-                String name = WordUtils.capitalizeFully(result.getString(1).toLowerCase());
-                sb.append(name);
-                sb.append("\n");
-                i++;
+                history.add(result.getString(1));
             }
-            if (i != 1) sb.append("\nВыберите номер города:");
-            return sb.toString();
+            return history;
         }
         catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
-        return "";
+        return null;
     }
 
-    public static void clearCityHistory(long id) {
-        logger.debug("Программа в методе clearCityHistory()");
+    public void clearCityHistory(long id) {
+        logger.debug("Программа в методе clearCityHistory() класса H2Database");
 
         try {
             statement.execute(String.format("DELETE FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -371,8 +394,8 @@ public class H2Database {
         }
     }
 
-    public static int getCityCodeByIndex(long id, int index) {
-        logger.debug("Программа в методе getCityByIndex()");
+    public int getCityCodeByIndex(long id, int index) {
+        logger.debug("Программа в методе getCityByIndex() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_CODE FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -390,8 +413,8 @@ public class H2Database {
         return -1;
     }
 
-    public static String getCityNameByIndex(long id, int index) {
-        logger.debug("Программа в методе getCityByIndex()");
+    public String getCityNameByIndex(long id, int index) {
+        logger.debug("Программа в методе getCityByIndex() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -410,15 +433,12 @@ public class H2Database {
     }
 
     //---------------------------------------------Прогноз по геолокации------------------------------------------------
-    public static void addGeoRequest(long id, String code, String name) {
-        logger.debug("Программа в методе addGeoRequest()");
+    public void addGeoRequest(long id, String code, String name) {
+        logger.debug("Программа в методе addGeoRequest() класса H2Database");
 
         try {
             // Если в названии геолокации есть апостроф, его нужно удалить, чтобы SQL запрос не сломался
-            while (name.contains("'")) {
-                int i = name.indexOf("'");
-                name = name.substring(0, i) + name.substring(i + 1);
-            }
+            name = name.replace("'", " ");
             statement.execute(String.format("INSERT INTO GEO_REQUESTS VALUES(%S, %S, '%S')", id, code, name));
             logger.info("В базу данных добавлен новый запрос геолокации");
         }
@@ -427,8 +447,8 @@ public class H2Database {
         }
     }
 
-    public static int getPrevGeoCode(long id) {
-        logger.debug("Программа в методе getPrevGeo()");
+    public int getPrevGeoCode(long id) {
+        logger.debug("Программа в методе getPrevGeo() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_CODE FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -444,8 +464,8 @@ public class H2Database {
         return -1;
     }
 
-    public static String getPrevGeoName(long id) {
-        logger.debug("Программа в методе getPrevGeo()");
+    public String getPrevGeoName(long id) {
+        logger.debug("Программа в методе getPrevGeo() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_NAME FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -461,33 +481,26 @@ public class H2Database {
         return "";
     }
 
-    public static String getGeoHistory(long id) {
-        logger.debug("Программа в методе getGeoHistory()");
+    public ArrayList<String> getGeoHistory(long id) {
+        logger.debug("Программа в методе getGeoHistory() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_NAME FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
+            ArrayList<String> history = new ArrayList<>();
 
-            StringBuilder sb = new StringBuilder("История запросов по геолокации:\n");
-            int i = 1;
             while (result.next()) {
-                sb.append(i);
-                sb.append(") ");
-                String name = WordUtils.capitalizeFully(result.getString(1).toLowerCase());
-                sb.append(name);
-                sb.append("\n");
-                i++;
+                history.add(result.getString(1));
             }
-            if (i != 1) sb.append("\nВыберите номер локации:");
-            return sb.toString();
+            return history;
         }
         catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
-        return "";
+        return null;
     }
 
-    public static void clearGeoHistory(long id) {
-        logger.debug("Программа в методе clearGeoHistory()");
+    public void clearGeoHistory(long id) {
+        logger.debug("Программа в методе clearGeoHistory() класса H2Database");
 
         try {
             statement.execute(String.format("DELETE FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -498,8 +511,8 @@ public class H2Database {
         }
     }
 
-    public static int getGeoCodeByIndex(long id, int index) {
-        logger.debug("Программа в методе getGeoByIndex()");
+    public int getGeoCodeByIndex(long id, int index) {
+        logger.debug("Программа в методе getGeoByIndex() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_CODE FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -517,8 +530,8 @@ public class H2Database {
         return -1;
     }
 
-    public static String getGeoNameByIndex(long id, int index) {
-        logger.debug("Программа в методе getGeoByIndex()");
+    public String getGeoNameByIndex(long id, int index) {
+        logger.debug("Программа в методе getGeoByIndex() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_NAME FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
@@ -536,9 +549,9 @@ public class H2Database {
         return "";
     }
 
-    //---------------------------------------------Получить значения флагов---------------------------------------------
-    public static Boolean dailyForecastTimeInputOn(long id) {
-        logger.debug("Программа в методе dailyForecastTimeInputOn()");
+    /*/---------------------------------------------Получить значения флагов---------------------------------------------
+    public Boolean dailyForecastTimeInputOn(long id) {
+        logger.debug("Программа в методе dailyForecastTimeInputOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_TIME_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -552,8 +565,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean dailyForecastCityInputOn(long id) {
-        logger.debug("Программа в методе dailyForecastCityInputOn()");
+    public Boolean dailyForecastCityInputOn(long id) {
+        logger.debug("Программа в методе dailyForecastCityInputOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_CITY_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -567,8 +580,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean cityNameInputOn(long id) {
-        logger.debug("Программа в методе cityNameInputOn()");
+    public Boolean cityNameInputOn(long id) {
+        logger.debug("Программа в методе cityNameInputOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -582,8 +595,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean cityNumberChooseOn(long id) {
-        logger.debug("Программа в методе cityNumberChooseOn()");
+    public Boolean cityNumberChooseOn(long id) {
+        logger.debug("Программа в методе cityNumberChooseOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NUMBER_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -597,8 +610,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean locationInputOn(long id) {
-        logger.debug("Программа в методе locationInputOn()");
+    public Boolean locationInputOn(long id) {
+        logger.debug("Программа в методе locationInputOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT LOCATION_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -612,8 +625,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean cityHistoryChooseOn(long id) {
-        logger.debug("Программа в методе cityHistoryChooseOn()");
+    public Boolean cityHistoryChooseOn(long id) {
+        logger.debug("Программа в методе cityHistoryChooseOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_HISTORY_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -627,8 +640,8 @@ public class H2Database {
         return false;
     }
 
-    public static Boolean geoHistoryChooseOn(long id) {
-        logger.debug("Программа в методе geoHistoryChooseOn()");
+    public Boolean geoHistoryChooseOn(long id) {
+        logger.debug("Программа в методе geoHistoryChooseOn() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT GEO_HISTORY_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
@@ -640,100 +653,5 @@ public class H2Database {
             logger.error(e.getMessage(), e);
         }
         return false;
-    }
-
-    //---------------------------------------------Установить значения флагов-------------------------------------------
-    public static void setDailyForecastTimeInput(long id, int isOn) {
-        logger.debug("Программа в методе setDailyForecastTimeInput()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET DAILY_FORECAST_TIME_INPUT_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setDailyForecastCityInput(long id, int isOn) {
-        logger.debug("Программа в методе setDailyForecastCityInput()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET DAILY_FORECAST_CITY_INPUT_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setCityNameInput(long id, int isOn) {
-        logger.debug("Программа в методе setCityNameInput()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_NAME_INPUT_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setCityNumberChoose(long id, int isOn) {
-        logger.debug("Программа в методе setCityNumberChoose()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_NUMBER_CHOOSE_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setLocationInput(long id, int isOn) {
-        logger.debug("Программа в методе setLocationInput()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET LOCATION_INPUT_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setCityHistoryChoose(long id, int isOn) {
-        logger.debug("Программа в методе setCityHistoryChoose()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_HISTORY_CHOOSE_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void setGeoHistoryChoose(long id, int isOn) {
-        logger.debug("Программа в методе setGeoHistoryChoose()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET GEO_HISTORY_CHOOSE_ON='%S' WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    public static void resetAllFlags(long id) {
-        logger.debug("Программа в методе resetAllFlags()");
-
-        try {
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET DAILY_FORECAST_TIME_INPUT_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET DAILY_FORECAST_CITY_INPUT_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_NAME_INPUT_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_NUMBER_CHOOSE_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET LOCATION_INPUT_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET CITY_HISTORY_CHOOSE_ON=0 WHERE CHAT_ID='%S'", id));
-            statement.execute(String.format("UPDATE CHATS_FLAGS SET GEO_HISTORY_CHOOSE_ON=0 WHERE CHAT_ID='%S'", id));
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
+    }*/
 }
