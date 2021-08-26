@@ -28,7 +28,7 @@ public class TimeZone {
 
     @SerializedName("Name")
     public String getName() {
-        return Utils.getUtils().formatTimeZone(name);
+        return Utils.formatTimeZone(name);
     }
 
     @SerializedName("Name")

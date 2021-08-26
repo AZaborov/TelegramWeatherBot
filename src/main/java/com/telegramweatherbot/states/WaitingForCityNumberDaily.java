@@ -2,6 +2,7 @@ package com.telegramweatherbot.states;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
@@ -22,14 +23,14 @@ public class WaitingForCityNumberDaily extends State {
         try {
             logger.warn("Возможно ввести неверные данные (не целое число или номер, которого нет в списке)");
             int cityNum = Integer.parseInt(userMessage);
-            ArrayList<LocationByCity> cities = H2Database.getDatabase().getCities(chat.getId());
+            ArrayList<LocationByCity> cities = H2Database.getCities(chat.getId());
             String cityName = cities.get(cityNum - 1).getLocalizedName();
             String cityCode = cities.get(cityNum - 1).getKey();
             String timeZone = cities.get(cityNum - 1).getTimeZone().getName();
 
-            H2Database.getDatabase().setDailyForecastCityName(chat.getId(), cityName);
-            H2Database.getDatabase().setDailyForecastCityCode(chat.getId(), cityCode);
-            H2Database.getDatabase().setDailyForecastTimeZone(chat.getId(), timeZone);
+            H2Database.setDailyForecastCityName(chat.getId(), cityName);
+            H2Database.setDailyForecastCityCode(chat.getId(), cityCode);
+            H2Database.setDailyForecastTimeZone(chat.getId(), timeZone);
 
             chat.getClock().setCityName(cityName);
             chat.getClock().setCityCode(cityCode);

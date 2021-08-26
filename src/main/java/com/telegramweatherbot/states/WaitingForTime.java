@@ -2,6 +2,7 @@ package com.telegramweatherbot.states;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
 
@@ -22,13 +23,14 @@ public class WaitingForTime extends State {
         String userMessage = update.message().text();
         try {
             Time time = Time.valueOf(userMessage);
-            H2Database.getDatabase().setDailyForecastTime(chat.getId(), time);
+            H2Database.setDailyForecastTime(chat.getId(), time);
             chat.getClock().setAlarmTime(time);
-            if (chat.getClock().isEnabled()) { chat.getClock().startClock(); }
+            if (chat.getClock().isEnabled()) {
+                chat.getClock().startClock();
+            }
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), String.format("Время ежедневного прогноза установлено на %s", time)));
             logger.info(String.format("В чате %s установили время ежедневного прогноза на %s", chat.getId(), time));
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "Время введено неверно"));
             logger.error(e.getMessage(), e);
         }

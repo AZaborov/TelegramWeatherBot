@@ -3,6 +3,7 @@ package com.telegramweatherbot.states;
 import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 public class WaitingForCityNameDaily extends State {
 
     private static final Logger logger = Logger.getLogger(WaitingForCityNameDaily.class);
+    private static Gson gson = new Gson();
 
     public WaitingForCityNameDaily(Chat chat) {
         super(chat);
@@ -20,14 +22,9 @@ public class WaitingForCityNameDaily extends State {
         logger.debug("Программа в методе processUpdate() класса WaitingForCityNameDaily");
 
         // После ввода названия города получаем список городов с одинаковыми названиеми
-        String userMessage = update.message().text();
+        String userCityRequest = update.message().text();
 
-        // Сырые данные в формате json
-        String contents = AccuWeatherRequests.getRequests().getCities(userMessage);
-        Gson gson = new Gson();
-
-        // Парс данных json в массив
-        LocationByCity[] cities = gson.fromJson(contents, LocationByCity[].class);
+        LocationByCity[] cities = AccuWeatherRequests.getCities(userCityRequest);
         logger.debug(String.format("Программа получила от чата %s json сообщение с найденными городами и распрасила его", chat.getId()));
 
         StringBuilder message = new StringBuilder();
@@ -51,7 +48,7 @@ public class WaitingForCityNameDaily extends State {
                 chat.setState(new WaitingForCityNumber12Hour(chat));
             }
             logger.debug(String.format("Программа составила список городов, основываясь на введённых в чате %s данных", chat.getId()));
-            H2Database.getDatabase().addCities(chat.getId(), cities);
+            H2Database.addCities(chat.getId(), cities);
             chat.setState(new WaitingForCityNumberDaily(chat));
         }
 

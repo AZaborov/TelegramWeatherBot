@@ -1,6 +1,7 @@
 package com.telegramweatherbot.service;
 
 import com.pengrad.telegrambot.model.Update;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.states.WaitingForCommand;
 import org.apache.log4j.Logger;
 
@@ -17,10 +18,10 @@ public class Chat {
         logger.debug("Программа в конструкторе класса Chat");
 
         this.id = id;
-        Time time = H2Database.getDatabase().getDailyForecastTime(id);
-        String name = H2Database.getDatabase().getDailyForecastCityName(id);
-        String code = H2Database.getDatabase().getDailyForecastCityCode(id);
-        String zone = H2Database.getDatabase().getDailyForecastTimeZone(id);
+        Time time = H2Database.getDailyForecastTime(id);
+        String name = H2Database.getDailyForecastCityName(id);
+        String code = H2Database.getDailyForecastCityCode(id);
+        String zone = H2Database.getDailyForecastTimeZone(id);
 
         clock = new DailyForecastAlarmClock(id, time, name, code, zone);
         setState(new WaitingForCommand(this));

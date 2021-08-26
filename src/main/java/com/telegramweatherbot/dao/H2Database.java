@@ -1,8 +1,10 @@
-package com.telegramweatherbot.service;
+package com.telegramweatherbot.dao;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.model.TimeZone;
+import com.telegramweatherbot.service.DailyForecastAlarmClock;
+import com.telegramweatherbot.service.Utils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.commons.text.WordUtils;
 import org.apache.log4j.Logger;
@@ -18,25 +20,15 @@ import java.util.HashMap;
 public class H2Database {
 
     private static final Logger logger = Logger.getLogger(H2Database.class);
-    private static H2Database database;
+    public static H2Database database = new H2Database();
     private Connection connection;
-    private Statement statement;
+    private static Statement statement;
 
     public H2Database() {
         logger.debug("Программа в конструкторе класса H2Database");
 
         connect();
         createTables();
-    }
-
-    public static synchronized H2Database getDatabase() {
-        logger.debug("Программа в методе getDatabase() класса H2Database");
-
-        if (database == null) {
-            database = new H2Database();
-        }
-
-        return database;
     }
 
     private void connect() {
@@ -54,8 +46,7 @@ public class H2Database {
             //connection = DriverManager.getConnection(url, user, password);
 
             logger.info("Подключена база данных");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
     }
@@ -71,20 +62,18 @@ public class H2Database {
             sr.runScript(reader);
 
             logger.info("В базе данных созданы таблицы");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public void addChat(long id) {
+    public static void addChat(long id) {
         logger.debug("Программа в методе addChat() класса H2Database");
 
         try {
             statement.execute(String.format("INSERT INTO DAILY_FORECAST_SETTINGS VALUES (%S, '09:00:00', 'Moscow, Russia, Moscow', 294021, 'Europe/Moscow', 0)", id));
             logger.info(String.format("В базу данных добавлен новый чат (id %s)", id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
@@ -95,14 +84,13 @@ public class H2Database {
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT * FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
             return result.next();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return false;
     }
 
-    public void addCities(long id, LocationByCity[] cities) {
+    public static void addCities(long id, LocationByCity[] cities) {
         logger.debug("Программа в методе addCities() класса H2Database");
 
         try {
@@ -127,13 +115,12 @@ public class H2Database {
             }
 
             logger.info(String.format("В базу данных добавлены результаты запроса городов для чата %s", id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public ArrayList<LocationByCity> getCities(long id) {
+    public static ArrayList<LocationByCity> getCities(long id) {
         logger.debug("Программа в методе getCities() класса H2Database");
 
         try {
@@ -150,15 +137,14 @@ public class H2Database {
                 cities.add(city);
             }
             return cities;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return null;
     }
 
     //---------------------------------------------Ежедневный прогноз---------------------------------------------------
-    public Time getDailyForecastTime(long id) {
+    public static Time getDailyForecastTime(long id) {
         logger.debug("Программа в методе getDailyForecastTime() класса H2Database");
 
         try {
@@ -166,25 +152,24 @@ public class H2Database {
             if (result.next()) {
                 return result.getTime(1);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
+        //TODO плохая практика хардкодить время по умолчанию
         return Time.valueOf("09:00:00");
     }
 
-    public void setDailyForecastTime(long id, Time time) {
+    public static void setDailyForecastTime(long id, Time time) {
         logger.debug("Программа в методе setDailyForecastTime() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_TIME='%S' WHERE CHAT_ID='%S'", time, id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public String getDailyForecastCityName(long id) {
+    public static String getDailyForecastCityName(long id) {
         logger.debug("Программа в методе getDailyForecastCityName() класса H2Database");
 
         try {
@@ -192,25 +177,24 @@ public class H2Database {
             if (result.next()) {
                 return WordUtils.capitalizeFully(result.getString(1).toLowerCase());
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
+        //TODO аналогичено предыдущему замечанию
         return "Moscow, Russia, Moscow";
     }
 
-    public void setDailyForecastCityName(long id, String name) {
+    public static void setDailyForecastCityName(long id, String name) {
         logger.debug("Программа в методе setDailyForecastCityName() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_CITY_NAME='%S' WHERE CHAT_ID='%S'", name, id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public String getDailyForecastCityCode(long id) {
+    public static String getDailyForecastCityCode(long id) {
         logger.debug("Программа в методе getDailyForecastCityCode() класса H2Database");
 
         try {
@@ -218,52 +202,50 @@ public class H2Database {
             if (result.next()) {
                 return result.getString("DAILY_FORECAST_CITY_CODE");
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
+        //TODO
         return "294021";
     }
 
-    public void setDailyForecastCityCode(long id, String code) {
+    public static void setDailyForecastCityCode(long id, String code) {
         logger.debug("Программа в методе setDailyForecastCityCode() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_CITY_CODE=%S WHERE CHAT_ID='%S'", code, id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public String getDailyForecastTimeZone(long id) {
+    public static String getDailyForecastTimeZone(long id) {
         logger.debug("Программа в методе getDailyForecastTimeZone() класса H2Database");
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_TIME_ZONE FROM DAILY_FORECAST_SETTINGS WHERE CHAT_ID='%S'", id));
             if (result.next()) {
                 String timeZone = result.getString("DAILY_FORECAST_TIME_ZONE");
-                return Utils.getUtils().formatTimeZone(timeZone);
+                return Utils.formatTimeZone(timeZone);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
+        //TODO
         return "Europe/Moscow";
     }
 
-    public void setDailyForecastTimeZone(long id, String zone) {
+    public static void setDailyForecastTimeZone(long id, String zone) {
         logger.debug("Программа в методе setDailyForecastTimeZone() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_TIME_ZONE='%S' WHERE CHAT_ID='%S'", zone, id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public Boolean dailyForecastOn(long id) {
+    public static Boolean dailyForecastOn(long id) {
         logger.debug("Программа в методе dailyForecastOn() класса H2Database");
 
         try {
@@ -271,20 +253,18 @@ public class H2Database {
             if (result.next()) {
                 return result.getBoolean("DAILY_FORECAST_ON");
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return false;
     }
 
-    public void setDailyForecast(long id, int isOn) {
+    public static void setDailyForecast(long id, int isOn) {
         logger.debug("Программа в методе setDailyForecast() класса H2Database");
 
         try {
             statement.execute(String.format("UPDATE DAILY_FORECAST_SETTINGS SET DAILY_FORECAST_ON=%S WHERE CHAT_ID='%S'", isOn, id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
@@ -309,14 +289,13 @@ public class H2Database {
                 if (forecastOn) clock.startClock();
                 logger.info("ДАННЫЕ ИЗ БАЗЫ СОХРАНИЛИСЬ");
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
     //---------------------------------------------Прогноз по городу----------------------------------------------------
-    public void addCityRequest(long id, String code, String name) {
+    public static void addCityRequest(long id, String code, String name) {
         logger.debug("Программа в методе addCityRequest() класса H2Database");
 
         try {
@@ -324,13 +303,12 @@ public class H2Database {
             name = name.replace("'", " ");
             statement.execute(String.format("INSERT INTO CITY_REQUESTS VALUES(%S, %S, '%S')", id, code, name));
             logger.info("В базу данных добавлен новый запрос города");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public int getPrevCityCode(long id) {
+    public static int getPrevCityCode(long id) {
         logger.debug("Программа в методе getPrevCity() класса H2Database");
 
         try {
@@ -340,14 +318,13 @@ public class H2Database {
                 cityCode = result.getInt(1);
             }
             return cityCode;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return -1;
     }
 
-    public String getPrevCityName(long id) {
+    public static String getPrevCityName(long id) {
         logger.debug("Программа в методе getPrevCity() класса H2Database");
 
         try {
@@ -357,44 +334,40 @@ public class H2Database {
                 cityName = WordUtils.capitalizeFully(result.getString(1).toLowerCase());
             }
             return cityName;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return "";
     }
 
-    public ArrayList<String> getCityHistory(long id) {
+    public static ArrayList<String> getCityHistory(long id) {
         logger.debug("Программа в методе getCityHistory() класса H2Database");
+        ArrayList<String> history = new ArrayList<>();
 
         try {
             ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
-            ArrayList<String> history = new ArrayList<>();
 
             while (result.next()) {
                 history.add(result.getString(1));
             }
-            return history;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;
+        return history;
     }
 
-    public void clearCityHistory(long id) {
+    public static void clearCityHistory(long id) {
         logger.debug("Программа в методе clearCityHistory() класса H2Database");
 
         try {
             statement.execute(String.format("DELETE FROM CITY_REQUESTS WHERE CHAT_ID='%S'", id));
             logger.info(String.format("Очищена история запросов по городам из чата %s", id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public int getCityCodeByIndex(long id, int index) {
+    public static int getCityCodeByIndex(long id, int index) {
         logger.debug("Программа в методе getCityByIndex() класса H2Database");
 
         try {
@@ -406,14 +379,13 @@ public class H2Database {
                 if (i == index) return cityCode;
                 i++;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return -1;
     }
 
-    public String getCityNameByIndex(long id, int index) {
+    public static String getCityNameByIndex(long id, int index) {
         logger.debug("Программа в методе getCityByIndex() класса H2Database");
 
         try {
@@ -425,15 +397,14 @@ public class H2Database {
                 if (i == index) return cityName;
                 i++;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return "";
     }
 
     //---------------------------------------------Прогноз по геолокации------------------------------------------------
-    public void addGeoRequest(long id, String code, String name) {
+    public static void addGeoRequest(long id, String code, String name) {
         logger.debug("Программа в методе addGeoRequest() класса H2Database");
 
         try {
@@ -441,13 +412,12 @@ public class H2Database {
             name = name.replace("'", " ");
             statement.execute(String.format("INSERT INTO GEO_REQUESTS VALUES(%S, %S, '%S')", id, code, name));
             logger.info("В базу данных добавлен новый запрос геолокации");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public int getPrevGeoCode(long id) {
+    public static int getPrevGeoCode(long id) {
         logger.debug("Программа в методе getPrevGeo() класса H2Database");
 
         try {
@@ -457,14 +427,13 @@ public class H2Database {
                 geoCode = result.getInt(1);
             }
             return geoCode;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return -1;
     }
 
-    public String getPrevGeoName(long id) {
+    public static String getPrevGeoName(long id) {
         logger.debug("Программа в методе getPrevGeo() класса H2Database");
 
         try {
@@ -474,44 +443,40 @@ public class H2Database {
                 geoName = WordUtils.capitalizeFully(result.getString(1).toLowerCase());
             }
             return geoName;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return "";
     }
 
-    public ArrayList<String> getGeoHistory(long id) {
+    public static ArrayList<String> getGeoHistory(long id) {
         logger.debug("Программа в методе getGeoHistory() класса H2Database");
 
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT GEO_NAME FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
+        try (ResultSet result = statement.executeQuery(String.format("SELECT GEO_NAME FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));) {
             ArrayList<String> history = new ArrayList<>();
 
             while (result.next()) {
                 history.add(result.getString(1));
             }
             return history;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return null;
     }
 
-    public void clearGeoHistory(long id) {
+    public static void clearGeoHistory(long id) {
         logger.debug("Программа в методе clearGeoHistory() класса H2Database");
 
         try {
             statement.execute(String.format("DELETE FROM GEO_REQUESTS WHERE CHAT_ID='%S'", id));
             logger.info(String.format("Очищена история запросов по геолокации из чата %s", id));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public int getGeoCodeByIndex(long id, int index) {
+    public static int getGeoCodeByIndex(long id, int index) {
         logger.debug("Программа в методе getGeoByIndex() класса H2Database");
 
         try {
@@ -523,14 +488,13 @@ public class H2Database {
                 if (i == index) return geoCode;
                 i++;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return -1;
     }
 
-    public String getGeoNameByIndex(long id, int index) {
+    public static String getGeoNameByIndex(long id, int index) {
         logger.debug("Программа в методе getGeoByIndex() класса H2Database");
 
         try {
@@ -542,8 +506,7 @@ public class H2Database {
                 if (i == index) return geoName;
                 i++;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
         }
         return "";

@@ -22,23 +22,15 @@ public class Utils {
     private static Properties properties;
     private static Utils utils;
 
-    public Utils(){}
-
-    public static synchronized Utils getUtils() {
-        logger.debug("Программа в методе getUtils()");
-
-        if (utils == null) {
-            utils = new Utils();
-        }
-
-        return utils;
+    public Utils(){
+        utils = new Utils();
     }
 
     public static Properties getProperties() {
         return properties;
     }
 
-    public String formatHistory(ArrayList<String> history) {
+    public static String formatHistory(ArrayList<String> history) {
         logger.debug("Программа в методе formatHistory()");
         StringBuilder sb = new StringBuilder();
 
@@ -53,13 +45,13 @@ public class Utils {
         return sb.toString();
     }
 
-    public String formatTimeZone(String timeZone) {
+    public static String formatTimeZone(String timeZone) {
         timeZone = timeZone.toLowerCase();
         String[] dummy = timeZone.split("/");
         return WordUtils.capitalize(dummy[0]) + "/" + WordUtils.capitalize(dummy[1]);
     }
 
-    public String getUrlContents(String theUrl) {
+    public static String getUrlContents(String theUrl) {
         logger.debug("Программа в методе getUrlContents()");
 
         StringBuilder content = new StringBuilder();
@@ -83,7 +75,7 @@ public class Utils {
         return content.toString();
     }
 
-    public void readConfigFile() {
+    public static void readConfigFile() {
         logger.debug("Программа в методе readConfigFile()");
         properties = new Properties();
 
@@ -96,10 +88,10 @@ public class Utils {
         }
     }
 
-    public String getForecastMessage(String code, String prevMessage) {
+    public static String getForecastMessage(String code, String prevMessage) {
         logger.debug("Программа в методе getForecastMessage()");
 
-        String contents = AccuWeatherRequests.getRequests().get12HourForecast(code);
+        String contents = AccuWeatherRequests.get12HourForecast(code);
         Gson gson = new Gson();
         HourForecast[] hourForecasts = gson.fromJson(contents, HourForecast[].class);
         logger.debug("Программа получила json сообщение с прогнозом погоды и распрасила его");

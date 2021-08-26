@@ -2,6 +2,7 @@ package com.telegramweatherbot.states;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
@@ -24,18 +25,18 @@ public class WaitingForCityNumber12Hour extends State {
         try {
             logger.warn("Возможно ввести неверные данные (не целое число или номер, которого нет в списке)");
             int cityNum = Integer.parseInt(userMessage);
-            ArrayList<LocationByCity> cities = H2Database.getDatabase().getCities(chat.getId());
+            ArrayList<LocationByCity> cities = H2Database.getCities(chat.getId());
             String cityName = cities.get(cityNum - 1).getLocalizedName();
             String cityCode = cities.get(cityNum - 1).getKey();
 
             // Получаем прогноз погоды
-            String message = Utils.getUtils().getForecastMessage(cityCode, "Город: " + cityName);
+            String message = Utils.getForecastMessage(cityCode, "Город: " + cityName);
 
             // Отправляем прогноз погоды в чат в Telegram
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), message));
 
             // Заносим текущий город в историю в базе данных
-            H2Database.getDatabase().addCityRequest(chat.getId(), cityCode, cityName);
+            H2Database.addCityRequest(chat.getId(), cityCode, cityName);
 
             logger.info(String.format("Программа успешно отправила прогноз погоды в чат %s", chat.getId()));
 

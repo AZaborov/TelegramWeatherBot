@@ -1,8 +1,8 @@
 package com.telegramweatherbot.service;
 
+import com.telegramweatherbot.dao.H2Database;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
 @Configuration

@@ -83,7 +83,7 @@ public class DailyForecastAlarmClock {
                 @Override
                 public void run() {
                     String prevMessage = String.format("Ежедневый прогноз для города %s:", cityName);
-                    String forecastMessage = Utils.getUtils().getForecastMessage(cityCode, prevMessage);
+                    String forecastMessage = Utils.getForecastMessage(cityCode, prevMessage);
                     TelegramWeatherBot.getBot().execute(new SendMessage(chatId, forecastMessage));
                 }
             }, delay, period);

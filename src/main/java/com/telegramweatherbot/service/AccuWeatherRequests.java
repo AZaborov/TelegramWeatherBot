@@ -1,5 +1,8 @@
 package com.telegramweatherbot.service;
 
+import com.google.gson.Gson;
+import com.telegramweatherbot.model.LocationByCity;
+import com.telegramweatherbot.model.LocationByGeo;
 import org.apache.log4j.Logger;
 
 public class AccuWeatherRequests {
@@ -9,24 +12,15 @@ public class AccuWeatherRequests {
     private static final String citiesRequest = "http://dataservice.accuweather.com/locations/v1/cities/search";
     private static final String locationRequest = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search";
     private static AccuWeatherRequests requests;
-    private final String accuWeatherApiKey;
+    private static String accuWeatherApiKey;
+    private static Gson gson = new Gson();
 
     public AccuWeatherRequests() {
         logger.debug("Программа в конструкторе класса AccuWeatherRequests");
         accuWeatherApiKey = Utils.getProperties().getProperty("accuWeatherApiKey");
     }
 
-    public static synchronized AccuWeatherRequests getRequests() {
-        logger.debug("Программа в методе getRequests() класса AccuWeatherRequests");
-
-        if (requests == null) {
-            requests = new AccuWeatherRequests();
-        }
-
-        return requests;
-    }
-
-    public String get12HourForecast(String locationCode) {
+    public static String get12HourForecast(String locationCode) {
         logger.debug("Программа в методе get12HourForecast() класса AccuWeatherRequests");
 
         StringBuilder url;
@@ -37,10 +31,10 @@ public class AccuWeatherRequests {
         url.append(accuWeatherApiKey);
         url.append("&language=ru-ru&metric=true");
 
-        return Utils.getUtils().getUrlContents(url.toString());
+        return Utils.getUrlContents(url.toString());
     }
 
-    public String getCities(String cityName) {
+    public static LocationByCity[] getCities(String cityName) {
         logger.debug("Программа в методе getCities() класса AccuWeatherRequests");
 
         StringBuilder url;
@@ -51,10 +45,10 @@ public class AccuWeatherRequests {
         url.append("&q=");
         url.append(cityName);
 
-        return Utils.getUtils().getUrlContents(url.toString());
+        return gson.fromJson(Utils.getUrlContents(url.toString()), LocationByCity[].class);
     }
 
-    public String getLocation(Float latitude, Float longitude) {
+    public static LocationByGeo getLocation(Float latitude, Float longitude) {
         logger.debug("Программа в методе getLocation() класса AccuWeatherRequests");
 
         StringBuilder url;
@@ -67,6 +61,6 @@ public class AccuWeatherRequests {
         url.append("%2C%20");
         url.append(longitude);
 
-        return Utils.getUtils().getUrlContents(url.toString());
+        return gson.fromJson(Utils.getUrlContents(url.toString()), LocationByGeo.class);
     }
 }

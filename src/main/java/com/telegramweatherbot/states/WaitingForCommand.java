@@ -2,6 +2,7 @@ package com.telegramweatherbot.states;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
 
@@ -81,15 +82,15 @@ public class WaitingForCommand extends State {
     private void prevForecastCity() {
         logger.debug("Программа в методе prevForecastCity() класса WaitingForCommand");
 
-        int cityCode = H2Database.getDatabase().getPrevCityCode(chat.getId());
-        String cityName = H2Database.getDatabase().getPrevCityName(chat.getId());
+        int cityCode = H2Database.getPrevCityCode(chat.getId());
+        String cityName = H2Database.getPrevCityName(chat.getId());
 
         if (cityCode == -1 ||cityName.equals("")) {
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "Не найдено предыдущего запроса"));
             logger.error(String.format("В базе данных запросов по городам для чата %s нет записей", chat.getId()));
         }
         else {
-            String message = Utils.getUtils().getForecastMessage(String.valueOf(cityCode), "Город: " + cityName);
+            String message = Utils.getForecastMessage(String.valueOf(cityCode), "Город: " + cityName);
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), message));
             logger.info(String.format("Программа успешно отправила прогноз погоды в чат %s", chat.getId()));
         }
@@ -98,15 +99,15 @@ public class WaitingForCommand extends State {
     private void prevForecastGeo() {
         logger.debug("Программа в методе prevForecastGeo() класса WaitingForCommand");
 
-        int locationCode = H2Database.getDatabase().getPrevGeoCode(chat.getId());
-        String locationName = H2Database.getDatabase().getPrevGeoName(chat.getId());
+        int locationCode = H2Database.getPrevGeoCode(chat.getId());
+        String locationName = H2Database.getPrevGeoName(chat.getId());
 
         if (locationCode == -1 || locationName.equals("")) {
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "Не найдено предыдущего запроса"));
             logger.error(String.format("В базе данных запросов по геолокации для чата %s нет записей", chat.getId()));
         }
         else {
-            String message = Utils.getUtils().getForecastMessage(String.valueOf(locationCode), "Локация: " + locationName);
+            String message = Utils.getForecastMessage(String.valueOf(locationCode), "Локация: " + locationName);
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), message));
             logger.info(String.format("Программа успешно отправила прогноз погоды в чат %s", chat.getId()));
         }
@@ -116,15 +117,15 @@ public class WaitingForCommand extends State {
         logger.debug("Программа в методе forecastCityHistory() класса WaitingForCommand");
 
         StringBuilder message = new StringBuilder();
-        ArrayList<String> history = H2Database.getDatabase().getCityHistory(chat.getId());
+        ArrayList<String> history = H2Database.getCityHistory(chat.getId());
 
-        if (history == null || history.isEmpty()) {
+        if (history.isEmpty()) {
             message.append("История запросов по городам пуста");
             chat.setState(new WaitingForCommand(chat));
         }
         else {
             message.append("История запросов по городам:\n");
-            message.append(Utils.getUtils().formatHistory(history));
+            message.append(Utils.formatHistory(history));
             message.append("\nВыберите номер города:");
             chat.setState(new WaitingForCityNumberHistory(chat));
             logger.info(String.format("Программа успешно отправила историю запросов по городам в чат %s", chat.getId()));
@@ -137,7 +138,7 @@ public class WaitingForCommand extends State {
         logger.debug("Программа в методе forecastGeoHistory() класса WaitingForCommand");
 
         StringBuilder message = new StringBuilder();
-        ArrayList<String> history = H2Database.getDatabase().getGeoHistory(chat.getId());
+        ArrayList<String> history = H2Database.getGeoHistory(chat.getId());
 
         if (history == null || history.isEmpty()) {
             message.append("История запросов по геолокации пуста");
@@ -145,7 +146,7 @@ public class WaitingForCommand extends State {
         }
         else {
             message.append("История запросов по геолокации:\n");
-            message.append(Utils.getUtils().formatHistory(history));
+            message.append(Utils.formatHistory(history));
             message.append("\nВыберите номер геолокации:");
             chat.setState(new WaitingForGeoHistory(chat));
             logger.info(String.format("Программа успешно отправила историю запросов по геолокации в чат %s", chat.getId()));
@@ -157,7 +158,7 @@ public class WaitingForCommand extends State {
     private void forecastCityClear() {
         logger.debug("Программа в методе forecastCityClear() класса WaitingForCommandState");
 
-        H2Database.getDatabase().clearCityHistory(chat.getId());
+        H2Database.clearCityHistory(chat.getId());
         TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "История запросов по городам очищена"));
         logger.info(String.format("Программа успешно очистила историю запросов по городам для чата %s", chat.getId()));
     }
@@ -165,7 +166,7 @@ public class WaitingForCommand extends State {
     private void forecastGeoClear() {
         logger.debug("Программа в методе forecastGeoClear() класса WaitingForCommandState");
 
-        H2Database.getDatabase().clearGeoHistory(chat.getId());
+        H2Database.clearGeoHistory(chat.getId());
         TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "История запросов по геолокации очищена"));
         logger.info(String.format("Программа успешно очистила историю запросов по геолокации для чата %s", chat.getId()));
     }
@@ -174,13 +175,13 @@ public class WaitingForCommand extends State {
         logger.debug("Программа в методе toggleDaily() класса WaitingForCommandState");
 
         // Прогноз включён, выключаем
-        if (H2Database.getDatabase().dailyForecastOn(chat.getId())) {
+        if (H2Database.dailyForecastOn(chat.getId())) {
             chat.getClock().stopClock();
             chat.getClock().setEnabled(false);
 
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), "Ежедневый прогноз выключен"));
             logger.info(String.format("В чате %s выключен ежедневый прогноз", chat.getId()));
-            H2Database.getDatabase().setDailyForecast(chat.getId(), 0);
+            H2Database.setDailyForecast(chat.getId(), 0);
         }
         // Прогноз выключен, включаем
         else {
@@ -197,7 +198,7 @@ public class WaitingForCommand extends State {
 
             TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), message.toString()));
             logger.info(String.format("В чате %s включён ежедневый прогноз", chat.getId()));
-            H2Database.getDatabase().setDailyForecast(chat.getId(), 1);
+            H2Database.setDailyForecast(chat.getId(), 1);
         }
     }
 
