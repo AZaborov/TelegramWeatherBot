@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.HashMap;
 
@@ -12,16 +13,18 @@ public class TelegramWeatherBot {
     private static final Logger logger = Logger.getLogger(TelegramWeatherBot.class);
     private static final HashMap<Long, Chat> chats = new HashMap<>();
     private static TelegramBot bot;
-
+    //private static AnnotationConfigApplicationContext context;
     private TelegramWeatherBot(){}
 
-    public static synchronized TelegramBot getBot() { return bot; }
+    public static TelegramBot getBot() { return bot; }
+
+    //public static AnnotationConfigApplicationContext getContext() { return context; }
 
     public static void main(String[] args) {
+        //AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
         PropertyConfigurator.configure("src/main/resources/log4j.properties");
         logger.debug("Программа запущена");
 
-        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         Utils.getUtils().readConfigFile();
         String token = Utils.getProperties().getProperty("telegramBotToken");
         bot = new TelegramBot(token);

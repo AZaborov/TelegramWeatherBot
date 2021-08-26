@@ -22,7 +22,7 @@ public class H2Database {
     private Connection connection;
     private Statement statement;
 
-    private H2Database() {
+    public H2Database() {
         logger.debug("Программа в конструкторе класса H2Database");
 
         connect();
@@ -548,110 +548,4 @@ public class H2Database {
         }
         return "";
     }
-
-    /*/---------------------------------------------Получить значения флагов---------------------------------------------
-    public Boolean dailyForecastTimeInputOn(long id) {
-        logger.debug("Программа в методе dailyForecastTimeInputOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_TIME_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("DAILY_FORECAST_TIME_INPUT_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean dailyForecastCityInputOn(long id) {
-        logger.debug("Программа в методе dailyForecastCityInputOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT DAILY_FORECAST_CITY_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("DAILY_FORECAST_CITY_INPUT_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean cityNameInputOn(long id) {
-        logger.debug("Программа в методе cityNameInputOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT CITY_NAME_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("CITY_NAME_INPUT_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean cityNumberChooseOn(long id) {
-        logger.debug("Программа в методе cityNumberChooseOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT CITY_NUMBER_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("CITY_NUMBER_CHOOSE_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean locationInputOn(long id) {
-        logger.debug("Программа в методе locationInputOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT LOCATION_INPUT_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("LOCATION_INPUT_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean cityHistoryChooseOn(long id) {
-        logger.debug("Программа в методе cityHistoryChooseOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT CITY_HISTORY_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("CITY_HISTORY_CHOOSE_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public Boolean geoHistoryChooseOn(long id) {
-        logger.debug("Программа в методе geoHistoryChooseOn() класса H2Database");
-
-        try {
-            ResultSet result = statement.executeQuery(String.format("SELECT GEO_HISTORY_CHOOSE_ON FROM CHATS_FLAGS WHERE CHAT_ID='%S'", id));
-            if (result.next()) {
-                return result.getBoolean("GEO_HISTORY_CHOOSE_ON");
-            }
-        }
-        catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return false;
-    }*/
 }

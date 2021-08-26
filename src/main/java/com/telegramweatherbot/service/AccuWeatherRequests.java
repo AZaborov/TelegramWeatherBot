@@ -11,7 +11,7 @@ public class AccuWeatherRequests {
     private static AccuWeatherRequests requests;
     private final String accuWeatherApiKey;
 
-    private AccuWeatherRequests() {
+    public AccuWeatherRequests() {
         logger.debug("Программа в конструкторе класса AccuWeatherRequests");
         accuWeatherApiKey = Utils.getProperties().getProperty("accuWeatherApiKey");
     }

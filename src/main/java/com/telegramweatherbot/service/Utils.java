@@ -22,10 +22,10 @@ public class Utils {
     private static Properties properties;
     private static Utils utils;
 
-    private Utils(){}
+    public Utils(){}
 
     public static synchronized Utils getUtils() {
-        logger.debug("Программа в методе getDatabase()");
+        logger.debug("Программа в методе getUtils()");
 
         if (utils == null) {
             utils = new Utils();
