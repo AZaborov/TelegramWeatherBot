@@ -31,7 +31,9 @@ public class TelegramWeatherBot {
                 Long id = update.message().from().id();
                 if (!chats.containsKey(id))
                 {
-                    chats.put(id, new Chat(id));
+                    Chat chat = new Chat(id);
+                    ChatConfig.config(chat);
+                    chats.put(id, chat);
                     H2Database.addChat(id);
                 }
                 chats.get(id).processUpdate(update);
