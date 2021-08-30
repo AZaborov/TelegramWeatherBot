@@ -9059,3 +9059,131 @@ java.lang.NullPointerException
 [main] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе getUtils()
 [main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
 [main] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе readConfigFile()
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе readConfigFile()
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Chat  - Программа в конструкторе класса Chat
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в конструкторе класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе connect() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - Подключена база данных
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе createTables() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTime() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityName() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityCode() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTimeZone() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.DailyForecastAlarmClock  - Программа в конструкторе класса DailyForecastAlarmClock
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе addChat() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базу данных добавлен новый чат (id 194667434)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе start() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе help() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе forecastCity() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа в методе processUpdate() класса WaitingForCityName12Hour
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.AccuWeatherRequests  - Программа в методе getCities() класса AccuWeatherRequests
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе getUrlContents()
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.Utils  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] ERROR com.telegramweatherbot.service.Utils  - Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=vjc
+java.io.IOException: Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=vjc
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1985)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1577)
+	at com.telegramweatherbot.service.Utils.getUrlContents(Utils.java:63)
+	at com.telegramweatherbot.service.AccuWeatherRequests.getCities(AccuWeatherRequests.java:48)
+	at com.telegramweatherbot.states.WaitingForCityName12Hour.processUpdate(WaitingForCityName12Hour.java:27)
+	at com.telegramweatherbot.service.Chat.processUpdate(Chat.java:42)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$0(TelegramWeatherBot.java:37)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$1(TelegramWeatherBot.java:30)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:73)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:49)
+	at com.pengrad.telegrambot.impl.TelegramBotClient$1.onResponse(TelegramBotClient.java:52)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа получила от чата 194667434 json сообщение с найденными городами и распрасила его
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе readConfigFile()
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Chat  - Программа в конструкторе класса Chat
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в конструкторе класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе connect() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - Подключена база данных
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе createTables() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTime() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityName() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityCode() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTimeZone() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.DailyForecastAlarmClock  - Программа в конструкторе класса DailyForecastAlarmClock
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе addChat() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базу данных добавлен новый чат (id 194667434)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе forecastCity() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа в методе processUpdate() класса WaitingForCityName12Hour
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.AccuWeatherRequests  - Программа в методе getCities() класса AccuWeatherRequests
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе getUrlContents()
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.Utils  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] ERROR com.telegramweatherbot.service.Utils  - Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=qwe
+java.io.IOException: Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=qwe
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1985)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1577)
+	at com.telegramweatherbot.service.Utils.getUrlContents(Utils.java:63)
+	at com.telegramweatherbot.service.AccuWeatherRequests.getCities(AccuWeatherRequests.java:48)
+	at com.telegramweatherbot.states.WaitingForCityName12Hour.processUpdate(WaitingForCityName12Hour.java:27)
+	at com.telegramweatherbot.service.Chat.processUpdate(Chat.java:42)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$0(TelegramWeatherBot.java:37)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$1(TelegramWeatherBot.java:30)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:73)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:49)
+	at com.pengrad.telegrambot.impl.TelegramBotClient$1.onResponse(TelegramBotClient.java:52)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа получила от чата 194667434 json сообщение с найденными городами и распрасила его
+[main] DEBUG com.telegramweatherbot.service.TelegramWeatherBot  - Программа запущена
+[main] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе readConfigFile()
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Chat  - Программа в конструкторе класса Chat
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в конструкторе класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе connect() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - Подключена база данных
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе createTables() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базе данных созданы таблицы
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTime() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityName() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastCityCode() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе getDailyForecastTimeZone() класса H2Database
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.DailyForecastAlarmClock  - Программа в конструкторе класса DailyForecastAlarmClock
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.dao.H2Database  - Программа в методе addChat() класса H2Database
+[OkHttp https://api.telegram.org/...] INFO  com.telegramweatherbot.dao.H2Database  - В базу данных добавлен новый чат (id 194667434)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе processUpdate() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCommand  - Программа в методе forecastCity() класса WaitingForCommand
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа в методе processUpdate() класса WaitingForCityName12Hour
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.AccuWeatherRequests  - Программа в методе getCities() класса AccuWeatherRequests
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.service.Utils  - Программа в методе getUrlContents()
+[OkHttp https://api.telegram.org/...] WARN  com.telegramweatherbot.service.Utils  - Возможна ошибка получения данных из-за неверно введённого адреса
+[OkHttp https://api.telegram.org/...] ERROR com.telegramweatherbot.service.Utils  - Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=/forecastcity
+java.io.IOException: Server returned HTTP response code: 401 for URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=null&q=/forecastcity
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1985)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1577)
+	at com.telegramweatherbot.service.Utils.getUrlContents(Utils.java:63)
+	at com.telegramweatherbot.service.AccuWeatherRequests.getCities(AccuWeatherRequests.java:49)
+	at com.telegramweatherbot.states.WaitingForCityName12Hour.processUpdate(WaitingForCityName12Hour.java:27)
+	at com.telegramweatherbot.service.Chat.processUpdate(Chat.java:42)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$0(TelegramWeatherBot.java:37)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at com.telegramweatherbot.service.TelegramWeatherBot.lambda$main$1(TelegramWeatherBot.java:30)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:73)
+	at com.pengrad.telegrambot.impl.UpdatesHandler$1.onResponse(UpdatesHandler.java:49)
+	at com.pengrad.telegrambot.impl.TelegramBotClient$1.onResponse(TelegramBotClient.java:52)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+[OkHttp https://api.telegram.org/...] DEBUG com.telegramweatherbot.states.WaitingForCityName12Hour  - Программа получила от чата 194667434 json сообщение с найденными городами и распрасила его

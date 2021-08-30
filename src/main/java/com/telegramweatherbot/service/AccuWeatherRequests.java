@@ -45,6 +45,7 @@ public class AccuWeatherRequests {
         url.append("&q=");
         url.append(cityName);
 
+        //TODO тут может оказаться null  в возвращаемом значении, это плохо, т.к. ожидается массив, хотябы пустой
         return gson.fromJson(Utils.getUrlContents(url.toString()), LocationByCity[].class);
     }
 
