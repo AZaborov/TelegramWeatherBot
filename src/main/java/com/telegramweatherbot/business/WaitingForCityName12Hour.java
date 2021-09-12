@@ -1,25 +1,26 @@
 package com.telegramweatherbot.states;
 
-import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
-import com.telegramweatherbot.service.*;
+import com.telegramweatherbot.service.AccuWeatherRequests;
+import com.telegramweatherbot.service.Chat;
+import com.telegramweatherbot.service.State;
+import com.telegramweatherbot.presentation.TelegramWeatherBot;
 import org.apache.log4j.Logger;
 
-public class WaitingForCityNameDaily extends State {
+public class WaitingForCityName12Hour extends State {
 
-    private static final Logger logger = Logger.getLogger(WaitingForCityNameDaily.class);
-    private static Gson gson = new Gson();
+    private static final Logger logger = Logger.getLogger(WaitingForCityName12Hour.class);
 
-    public WaitingForCityNameDaily(Chat chat) {
+    public WaitingForCityName12Hour(Chat chat) {
         super(chat);
     }
 
     @Override
     public void processUpdate(Update update) {
-        logger.debug("Программа в методе processUpdate() класса WaitingForCityNameDaily");
+        logger.debug("Программа в методе processUpdate() класса WaitingForCityName12Hour");
 
         // После ввода названия города получаем список городов с одинаковыми названиеми
         String userCityRequest = update.message().text();
@@ -44,14 +45,11 @@ public class WaitingForCityNameDaily extends State {
                 message.append(", ");
                 message.append(cities[i].getAdministrativeArea().getLocalizedName());
                 message.append("\n");
-
-                chat.setState(new WaitingForCityNumber12Hour(chat));
             }
+            chat.setState(new WaitingForCityNumber12Hour(chat));
             logger.debug(String.format("Программа составила список городов, основываясь на введённых в чате %s данных", chat.getId()));
             H2Database.addCities(chat.getId(), cities);
-            chat.setState(new WaitingForCityNumberDaily(chat));
         }
-
         TelegramWeatherBot.getBot().execute(new SendMessage(chat.getId(), message.toString()));
     }
 }

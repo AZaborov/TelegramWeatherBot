@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
+import com.telegramweatherbot.presentation.TelegramWeatherBot;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
 

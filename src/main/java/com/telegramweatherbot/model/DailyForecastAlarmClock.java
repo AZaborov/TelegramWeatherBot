@@ -1,7 +1,7 @@
 package com.telegramweatherbot.service;
 
-import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.telegramweatherbot.presentation.TelegramWeatherBot;
 import org.apache.log4j.Logger;
 
 import java.sql.Time;
