@@ -20,11 +20,6 @@ public class Utils {
 
     private static final Logger logger = Logger.getLogger(Utils.class);
     private static Properties properties;
-    private static Utils utils;
-
-    public Utils(){
-        utils = new Utils();
-    }
 
     public static Properties getProperties() {
         return properties;
@@ -80,7 +75,7 @@ public class Utils {
         properties = new Properties();
 
         try {
-            InputStream inputStream = TelegramWeatherBot.class.getResourceAsStream("/config.properties");
+            InputStream inputStream = Utils.class.getResourceAsStream("/config.properties");
             properties.load(inputStream);
         }
         catch (IOException e) {

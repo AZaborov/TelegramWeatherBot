@@ -1,10 +1,11 @@
-package com.telegramweatherbot.states;
+package com.telegramweatherbot.business;
 
-import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.telegramweatherbot.dao.H2Database;
+import com.telegramweatherbot.model.Chat;
 import com.telegramweatherbot.model.LocationByCity;
+import com.telegramweatherbot.model.State;
 import com.telegramweatherbot.presentation.TelegramWeatherBot;
 import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
@@ -12,7 +13,6 @@ import org.apache.log4j.Logger;
 public class WaitingForCityNameDaily extends State {
 
     private static final Logger logger = Logger.getLogger(WaitingForCityNameDaily.class);
-    private static Gson gson = new Gson();
 
     public WaitingForCityNameDaily(Chat chat) {
         super(chat);

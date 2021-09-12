@@ -1,6 +1,7 @@
-package com.telegramweatherbot.service;
+package com.telegramweatherbot.model;
 
 import com.pengrad.telegrambot.model.Update;
+import com.telegramweatherbot.model.Chat;
 
 public abstract class State {
     protected Chat chat;

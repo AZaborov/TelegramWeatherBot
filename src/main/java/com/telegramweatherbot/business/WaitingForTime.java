@@ -1,10 +1,11 @@
-package com.telegramweatherbot.states;
+package com.telegramweatherbot.business;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.telegramweatherbot.dao.H2Database;
+import com.telegramweatherbot.model.Chat;
+import com.telegramweatherbot.model.State;
 import com.telegramweatherbot.presentation.TelegramWeatherBot;
-import com.telegramweatherbot.service.*;
 import org.apache.log4j.Logger;
 
 import java.sql.Time;

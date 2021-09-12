@@ -3,7 +3,7 @@ package com.telegramweatherbot.dao;
 import com.pengrad.telegrambot.TelegramBot;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.model.TimeZone;
-import com.telegramweatherbot.service.DailyForecastAlarmClock;
+import com.telegramweatherbot.model.DailyForecastAlarmClock;
 import com.telegramweatherbot.service.Utils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.commons.text.WordUtils;

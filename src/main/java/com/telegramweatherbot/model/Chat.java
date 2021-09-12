@@ -1,4 +1,4 @@
-package com.telegramweatherbot.service;
+package com.telegramweatherbot.model;
 
 import com.pengrad.telegrambot.model.Update;
 import org.apache.log4j.Logger;

@@ -1,12 +1,12 @@
-package com.telegramweatherbot.states;
+package com.telegramweatherbot.business;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.telegramweatherbot.dao.H2Database;
 import com.telegramweatherbot.model.LocationByCity;
 import com.telegramweatherbot.service.AccuWeatherRequests;
-import com.telegramweatherbot.service.Chat;
-import com.telegramweatherbot.service.State;
+import com.telegramweatherbot.model.Chat;
+import com.telegramweatherbot.model.State;
 import com.telegramweatherbot.presentation.TelegramWeatherBot;
 import org.apache.log4j.Logger;
 

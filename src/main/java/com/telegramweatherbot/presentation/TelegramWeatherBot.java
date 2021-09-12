@@ -1,10 +1,11 @@
-package com.telegramweatherbot.service;
+package com.telegramweatherbot.presentation;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.telegramweatherbot.dao.H2Database;
+import com.telegramweatherbot.model.Chat;
+import com.telegramweatherbot.service.ChatConfig;
+import com.telegramweatherbot.service.Utils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import java.util.HashMap;
 
@@ -17,11 +18,8 @@ public class TelegramWeatherBot {
 
     public static TelegramBot getBot() { return bot; }
 
-    public static void main(String[] args) {
-        PropertyConfigurator.configure("src/main/resources/log4j.properties");
-        logger.debug("Программа запущена");
-
-        Utils.readConfigFile();
+    public static void start() {
+        logger.debug("Программа в методе start() класса TelegramWeatherBot");
         String token = Utils.getProperties().getProperty("telegramBotToken");
         bot = new TelegramBot(token);
 
@@ -34,7 +32,6 @@ public class TelegramWeatherBot {
                     Chat chat = new Chat(id);
                     ChatConfig.config(chat);
                     chats.put(id, chat);
-                    H2Database.addChat(id);
                 }
                 chats.get(id).processUpdate(update);
             });

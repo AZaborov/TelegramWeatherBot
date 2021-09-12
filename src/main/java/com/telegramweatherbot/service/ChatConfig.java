@@ -1,7 +1,9 @@
 package com.telegramweatherbot.service;
 
 import com.telegramweatherbot.dao.H2Database;
-import com.telegramweatherbot.states.WaitingForCommand;
+import com.telegramweatherbot.business.WaitingForCommand;
+import com.telegramweatherbot.model.Chat;
+import com.telegramweatherbot.model.DailyForecastAlarmClock;
 import org.apache.log4j.Logger;
 
 import java.sql.Time;
@@ -16,6 +18,7 @@ public class ChatConfig {
         logger.debug("Программа в методе config() класса ChatConfig");
 
         long id = chat.getId();
+        H2Database.addChat(id);
 
         try {
             Time time = H2Database.getDailyForecastTime(id);
